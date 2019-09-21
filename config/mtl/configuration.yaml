@@ -1,0 +1,357 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret zone_home_latitude
+  longitude: !secret zone_home_longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Montreal
+  # Customization file
+  customize: !include customize.yaml
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+http:
+  api_password: !secret http_api_password
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+binary_sensor:
+  - platform: mqtt
+    unique_id: dclxvi_online
+    name: DCLXVI Connection Status
+    off_delay: 90
+    state_topic: "hass/message/state/dclxvi_pi"
+  - platform: workday
+    name: Work Day
+    country: CA
+    province: QC
+
+camera:
+  - platform: mjpeg
+    name: !secret camera_broom_name
+    mjpeg_url: !secret camera_broom_url
+  - platform: mjpeg
+    name: !secret camera_lroom_name
+    mjpeg_url: !secret camera_lroom_url
+  - platform: mqtt
+    name: DCLXVI Windshield Image
+    unique_id: dclxvi_pi_front
+    topic: hass/message/image/dclxvi_pi/front
+
+climate:
+  - platform: generic_thermostat
+    name: Aquarium Thermostat
+    heater: switch.aqua_heater
+    target_sensor: sensor.aquarium_temperature
+    ac_mode: false
+    target_temp: 26
+    cold_tolerance: 0
+    hot_tolerance: 0
+    min_temp: 24
+    max_temp: 28
+    initial_operation_mode: "auto"
+
+# Cloud
+cloud:
+
+# Enables configuration UI
+config:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+#Device tracking
+device_tracker:
+  - platform: bluetooth_le_tracker
+  - platform: bluetooth_tracker
+  - platform: mqtt_json
+    devices:
+      dclxvi_pi: hass/message/location/dclxvi_pi 
+  - platform: snmp
+    host: 10.0.1.1
+    community: public
+    baseoid: 1.3.6.1.2.1.3.1.1.2
+    new_device_defaults:
+      track_new_devices: True
+      hide_if_away: False
+  - platform: nmap_tracker
+    hosts: 10.0.1.0/24
+
+# Discover some devices automatically
+discovery:
+
+# Enables the frontend
+frontend:
+
+# Enables support for tracking state changes over time
+history:
+
+influxdb:
+  host: !secret influxdb_host
+  port: 8086
+  database: !secret influxdb_db
+  username: !secret influxdb_user
+  password: !secret influxdb_password
+  tags:
+    instance: bbf
+    source: hass
+
+# Show links to resources in log and frontend
+#introduction:
+
+# View all events in a logbook
+logbook:
+
+lutron_caseta:
+    host: 10.0.1.50
+    keyfile: caseta.key
+    certfile: caseta.crt
+    ca_certs: caseta-bridge.crt
+
+# Enables a map showing the location of tracked devices
+map:
+
+media_player:
+  - platform: plex
+    scan_interval: 1
+    show_all_controls: True
+  - platform: lg_netcast
+    host: 10.0.1.4
+    access_token: !secret plex_token
+
+mqtt:
+  broker: !secret mqtt_host
+  port: !secret mqtt_port
+  username: !secret mqtt_user
+  password: !secret mqtt_password
+  certificate: /etc/ssl/certs/ca-certificates.crt
+ 
+mqtt_statestream:
+  base_topic: hass/statestream
+  publish_attributes: true
+  publish_timestamps: true
+
+mqtt_eventstream:
+  publish_topic: hass/eventstream/slaves/mtl
+  subscribe_topic: hass/eventstream/master
+
+scene:
+  - name: Canadiens
+    entities:
+      light.kitchen_1:
+        state: true
+        rgb_color: [255,0,0]
+      light.kitchen_2:
+        state: true
+        rgb_color: [255,255,255]
+      light.kitchen_3:
+        state: true
+        rgb_color: [0,0,255]
+  - name: Småland
+    entities:
+      light.kitchen_1:
+        state: true
+        rgb_color: [255,255,0]
+      light.kitchen_2:
+        state: true
+        rgb_color: [255,0,0]
+      light.kitchen_3:
+        state: true
+        rgb_color: [255,255,0]
+  - name: Karen
+    entities:
+      light.kitchen_1:
+        state: true
+        rgb_color: [255,121,9]
+        #xy_color: [0.618,0.367]
+        #hs_color: [27.356,96.469]
+        #brightness: 254
+      light.kitchen_2:
+        state: true
+        rgb_color: [255,121,9]
+        #xy_color: [0.618,0.367]
+        #hs_color: [27.356,96.469]
+        #brightness: 254
+      light.kitchen_3:
+        state: true
+        rgb_color: [255,121,9]
+        #xy_color: [0.618,0.367]
+        #hs_color: [27.356,96.469]
+        #brightness: 254
+  - name: Doro
+    entities:
+      light.kitchen_1:
+        state: true
+        rgb_color: [0,0,255]
+      light.kitchen_2:
+        state: true
+        rgb_color: [0,0,255]
+      light.kitchen_3:
+        state: true
+        rgb_color: [0,0,255]
+  - name: V60 Engine Not Running
+    entities:
+      light.v60_status_bulb:
+        state: true
+        rgb_color: [255,78,46]
+        brightness: 35
+  - name: V60 Engine Running
+    entities:
+      light.v60_status_bulb:
+        state: true
+        rgb_color: [255,149,50]
+        brightness: 35
+  - name: V60 Tracker Connected
+    entities:
+      light.v60_status_bulb:
+        state: true
+        rgb_color: [244,255,0]
+        brightness: 35
+  - name: V60 Tracker Home
+    entities:
+      light.v60_status_bulb:
+        state: true
+        rgb_color: [96,0,255]
+        brightness: 35
+  - name: V60 Unlocked
+    entities:
+      light.v60_status_bulb:
+        state: true
+        rgb_color: [255,0,0]
+        brightness: 35
+
+        
+
+# Sensors
+sensor:
+  # Weather prediction
+  - platform: yr
+    monitored_conditions:
+    - temperature
+    - symbol
+  - platform: imap
+    server: imap.gmail.com
+    port: 993
+    username: !secret gmail_user
+    password: !secret gmail_password
+  - platform: hydroquebec
+    username: !secret hydroquebec_user
+    password: !secret hydroquebec_password
+    contract: !secret hydroquebec_contract
+    monitored_variables:
+      - period_total_consumption
+      - yesterday_total_consumption
+      - balance
+  - platform: ebox
+    username: !secret ebox_username
+    password: !secret ebox_password
+    monitored_variables:
+     - download
+     - upload
+     - total
+     - balance
+     - limit
+     - usage
+  - platform: mqtt
+    name: "Aquarium Temperature"
+    state_topic: "hass/message/sensorist/mtl"
+    unit_of_measurement: '°C'
+    value_template: "{{ value_json['32208']['value'] }}"
+    json_attributes_topic: "hass/message/sensorist/mtl"
+  - platform: mqtt
+    name: "MTL Bedroom Temperature"
+    state_topic: "hass/message/sensorist/mtl"
+    unit_of_measurement: '°C'
+    value_template: "{{ value_json['32211']['value'] }}"
+    json_attributes_topic: "hass/message/sensorist/mtl"
+  - platform: mqtt
+    name: "MTL Livingroom Temperature"
+    state_topic: "hass/message/sensorist/mtl"
+    unit_of_measurement: '°C'
+    value_template: "{{ value_json['32206']['value'] }}"
+    json_attributes_topic: "hass/message/sensorist/mtl"
+
+
+
+
+#  - platform: mqtt
+#    name: "Aquarium Temperature"
+#    state_topic: "hass/message/sensorist/mtl/aqua"
+#    unit_of_measurement: '°C'
+#    value_template: "{{ value_json.value }}"
+#    json_attributes:
+#      - date
+#      - seq
+
+# Track the sun
+sun:
+
+tellstick:
+  host: 10.0.1.29
+  port: [50800, 50801]
+
+tradfri:
+  host: 10.0.1.210
+
+# Text to speech
+tts:
+  - platform: google
+
+volvooncall:
+  username: !secret voc_user
+  password: !secret voc_password
+  region: !secret voc_region
+  resources:
+    - position 
+    - engine_start
+    - heater
+    - is_engine_running
+    - lock
+
+zone:
+  - name: Home
+    latitude: !secret zone_home_latitude
+    longitude: !secret zone_home_longitude
+    radius: 500
+    icon: mdi:castle
+
+  - name: !secret zone_mwork_name
+    latitude: !secret zone_mwork_latitude
+    longitude: !secret zone_mwork_longitude
+    radius: 500
+    icon: mdi:work
+
+  - name: !secret zone_kwork_name
+    latitude: !secret zone_kwork_latitude
+    longitude: !secret zone_kwork_longitude
+    radius: 500
+    icon: mdi:work
+
+  - name: !secret zone_lkn_name
+    latitude: !secret zone_lkn_latitude
+    longitude: !secret zone_lkn_longitude
+    radius: 500
+    icon: mdi:castle
+
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+logger:
+  default: warning
+  logs:
+    homeassistant.components.mqtt: warning

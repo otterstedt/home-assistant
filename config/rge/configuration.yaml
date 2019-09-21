@@ -1,0 +1,173 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret zone_rge_latitude
+  longitude: !secret zone_rge_longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: UTC
+#  # Customization file
+#  customize: !include customize.yaml
+
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+http:
+  api_password: !secret http_api_password
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+binary_sensor:
+  - platform: mqtt
+    name: "Door Detector"
+    device_class: "door"
+    state_topic: "hass/message/sensorist/rge"
+    payload_on: 1
+    payload_off: 0
+    value_template: "{{ value_json['35055']['value'] }}"
+    json_attributes_topic: "hass/message/sensorist/rge"
+
+# Sensors
+sensor:
+  # Weather prediction
+  - platform: yr
+  - platform: mqtt
+    name: "RGE Door Temperature"
+    state_topic: "hass/message/sensorist/rge"
+    unit_of_measurement: '°C'
+    value_template: "{{ value_json['35036']['value'] }}"
+    json_attributes_topic: "hass/message/sensorist/rge"
+  - platform: mqtt
+    name: "RGE Bedroom Temperature "
+    state_topic: "hass/message/sensorist/rge"
+    unit_of_measurement: '°C'
+    value_template: "{{ value_json['35040']['value'] }}"
+    json_attributes_topic: "hass/message/sensorist/rge"
+
+tellduslive:
+
+# Text to speech
+tts:
+  - platform: google
+
+# Cloud
+cloud:
+
+nest:
+  client_id: !secret nest_client_id
+  client_secret: !secret nest_client_secret
+
+camera:
+  - platform: mjpeg
+    name: !secret camera_rge_back_name
+    mjpeg_url: !secret camera_rge_back_url
+  - platform: mjpeg
+    name: !secret camera_rge_front_name
+    mjpeg_url: !secret camera_rge_front_url
+  - platform: mjpeg
+    name: !secret camera_rge_lroom_name
+    mjpeg_url: !secret camera_rge_lroom_url
+  - platform: mjpeg
+    name: !secret camera_rge_sat_name
+    mjpeg_url: !secret camera_rge_sat_url
+  - platform: mjpeg
+    name: !secret camera_rge_dtop_name
+    mjpeg_url: !secret camera_rge_dtop_url
+  - platform: mjpeg
+    name: !secret camera_rge_attic_name
+    mjpeg_url: !secret camera_rge_attic_url
+  - platform: mjpeg
+    name: !secret camera_rge_outhouse_name
+    mjpeg_url: !secret camera_rge_outhouse_url
+
+device_tracker:
+  - platform: nmap_tracker
+    hosts: 192.168.1.0/24
+    home_interval: 1
+    exclude:
+      - 192.168.1.80
+#  - platform: nmap_tracker
+#    hosts: ipcam-back.lan
+#    home_interval: 1
+#  - platform: nmap_tracker
+#    hosts: ipcam-front.lan
+#    home_interval: 1
+#  - platform: nmap_tracker
+#    hosts: ipcam-living.lan
+#    home_interval: 1
+
+influxdb:
+
+mqtt:
+  broker: !secret mqtt_host
+  port: !secret mqtt_port
+  username: !secret mqtt_user
+  password: !secret mqtt_password
+  certificate: /etc/ssl/certs/ca-certificates.crt
+
+mqtt_statestream:
+  base_topic: hass/statestream
+  publish_attributes: true
+  publish_timestamps: true
+
+mqtt_eventstream:
+  publish_topic: hass/eventstream/slaves/rge
+  subscribe_topic: hass/eventstream/master
+
+ffmpeg:
+
+panel_iframe:
+  grafana:
+    title: 'Grafana'
+    url: http://127.2.1.10:3000
+    icon: mdi:gauge
+
+upnp:
+  sensors: true
+  port_mapping: false
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+logger:
+  default: warning
+  logs:
+    homeassistant.components.mqtt: warning
+    

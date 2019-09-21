@@ -1,0 +1,13 @@
+- id: '1544633615927'
+  alias: Calculate Tracker Last Seen
+  trigger:
+  - platform: time_pattern
+    minutes: '/1'
+    seconds: 00
+  condition:
+  - condition: template
+    value_template: '{{ states.sensor.dclxvi_tracker_last_seen != "unknown" }}' 
+  action:
+  - data:
+      entity_id: sensor.dclxvi_tracker_last_seen_duration
+    service: homeassistant.update_entity

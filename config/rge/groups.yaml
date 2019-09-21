@@ -1,0 +1,21 @@
+weather:
+  name: Climate
+  entities:
+    - sensor.temp_patio_temperature
+    - sensor.temp_patio_humidity
+    - sensor.rge_bedroom_temperature
+    - sensor.rge_door_temperature
+    
+state:
+  name: Chalet State
+  entities:
+    -  binary_sensor.door_detector
+
+rge:
+ name: Rävgrävle
+ entities:
+   - binary_sensor.backyard_camera_motion_detected
+   - binary_sensor.backyard_camera_online
+   - binary_sensor.backyard_camera_person_detected
+   - binary_sensor.backyard_camera_sound_detected
+   - camera.backyard

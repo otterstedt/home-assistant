@@ -1,0 +1,362 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret zone_home_latitude
+  longitude: !secret zone_home_longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: UTC
+  # Customization file
+  customize: !include customize.yaml
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+http:
+  api_password: !secret http_api_password
+  base_url: !secret http_base_url
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+amcrest:
+  - host: 127.4.52.10
+    port: 8080
+    username: admin
+    password: !secret mqtt_password
+
+
+# Sensors
+sensor:
+  # Weather prediction
+  - platform: yr
+  - platform: yr
+    name: yr_lkn
+    latitude: !secret zone_lkn_latitude
+    longitude: !secret zone_lkn_longitude
+    monitored_conditions:
+      - temperature
+      - symbol
+  - platform: imap
+    server: imap.gmail.com
+    port: 993
+    username: !secret gmail_user
+    password: !secret gmail_password
+  - platform: waze_travel_time
+    name: "DCLXVI to Home"
+    origin: device_tracker.volvo_dclxvi
+    destination: zone.home
+    region: 'US'
+  - platform: waze_travel_time
+    name: "DCLXVI Tracker to Home"
+    origin: sensor.dclxvi_tracker_speed
+    destination: zone.home
+    region: 'US'
+  - platform: waze_travel_time
+    name: "DCLXVI to Home Usual"
+    destination: zone.home
+    origin: device_tracker.volvo_dclxvi
+    region: 'US'
+    realtime: false
+  - platform: template
+    sensors:
+      dclxvi_odometer_10k:
+        value_template: '{{  ((states.sensor.dclxvi_odometer.state | int) - 55983)  % 10000 }}'
+        friendly_name: '10k odometer'
+        unit_of_measurement: 'km'
+      dclxvi_odometer_insurance_period:
+        value_template: '{{  ((states.sensor.dclxvi_odometer.state | int) - 81472) }}'
+        friendly_name: 'Insurance Period Odometer'
+        unit_of_measurement: 'km'
+      to_home_dclxvi_diff:
+        value_template: '{{  (((states.sensor.dclxvi_to_home.state | float) -  (states.sensor.dclxvi_to_home_usual.state | float))  | int)}}'
+        friendly_name: 'DCLXVI to Home Difference'
+        unit_of_measurement: 'min'
+      dclxvi_tracker_last_seen_duration:
+        value_template: "{{ ((as_timestamp(now()) - (state_attr('sensor.dclxvi_tracker_last_seen', 'timestamp') | int )) / 3600) | round(2) }}"
+        entity_id: 
+          - sensor.dclxvi_tracker_last_seen
+        friendly_name: DCXLVI Tracker Since Last Seen
+        unit_of_measurement: Hours
+      dclxvi_tracker_speed_coordinates:
+        value_template: "{{ (state_attr('sensor.dclxvi_tracker_speed', 'latitude'), state_attr('sensor.dclxvi_tracker_speed', 'longitude')) | join(',') }}"
+        friendly_name: DCLXVI Tracker Speed Coordinates
+        unit_of_measurement: DD
+      dclxvi_tracker_speed_temp:
+        value_template: "{{ state_attr('sensor.dclxvi_tracker_speed', 'temp') }}"
+        friendly_name: DCLXVI Tracker Speed Temperature
+        unit_of_measurement: C
+      dclxvi_tracker_speed_pressure:
+        value_template: "{{ state_attr('sensor.dclxvi_tracker_speed', 'pressure') }}"
+        friendly_name: DCLXVI Tracker Speed Pressure
+        unit_of_measurement: bar
+      dclxvi_tracker_speed_humidity:
+        value_template: "{{ state_attr('sensor.dclxvi_tracker_speed', 'humidity') }}"
+        friendly_name: DCLXVI Tracker Speed Humidity
+        unit_of_measurement: '%'
+  - platform: cert_expiry
+    host: !secret host_grafana
+    name: !secret host_grafana
+  - platform: cert_expiry
+    host: !secret host_mqtt
+    port: !secret host_mqtt_port
+    name: !secret host_mqtt
+  - platform: cert_expiry
+    host: !secret host_hass
+    name: !secret host_hass
+  - platform: cert_expiry
+    host: !secret host_maps
+    name: !secret host_maps
+  - platform: cert_expiry
+    host: !secret host_trackapp
+    name: !secret host_trackapp
+  - platform: mqtt
+    name: "DCLXVI Tracker Speed"
+    state_topic: "hass/message/location/dclxvi_pi"
+    unit_of_measurement: 'm/s'
+    value_template: "{{ value_json.speed }}"
+    json_attributes:
+      - latitude
+      - longitude
+      - altitude
+      - gps_accuracy
+      - speed
+      - date
+      - timestamp
+      - timestampms
+      - timestampns
+      - status
+      - pitch
+      - roll
+      - yaw
+      - temp
+      - pressure
+      - humidity
+      - climb
+      - course
+      - acceleration
+      - side_gravity
+      - gravity
+      - date
+      - trackid
+  - platform: mqtt
+    name: DCLXVI Tracker Last Seen
+    unique_id: dclxvi_tracker_last_seen
+    state_topic: hass/message/location/dclxvi_pi
+    value_template: "{{ value_json.date }}"
+    unit_of_measurement: 'ISO Time'
+    json_attributes:
+      - latitude
+      - longitude
+      - gps_accuracy
+      - altitude
+      - speed
+      - date
+      - timestamp
+      - timestampms
+  - platform: mqtt
+    name: Hydro Quebec Bill
+    unique_id: hydroquebec_bill
+    state_topic: hass/message/hydroquebec/brebeuf
+    value_template: "{{ value_json.period_total_bill }}"
+    unit_of_measurement: 'CAD'
+    json_attributes:
+      - balance
+      - period_projection
+      - period_length
+      - period_total_days
+      - period_total_consumption
+      - yesterday_total_consumption
+  - platform: mqtt
+    name: Hydro Quebec Consumption
+    unique_id: hydroquebec_consumption
+    state_topic: hass/message/hydroquebec/brebeuf
+    value_template: "{{ value_json.yesterday_total_consumption }}"
+    unit_of_measurement: 'kWh'
+  - platform: hydroquebec
+    username: !secret hydroquebec_user
+    password: !secret hydroquebec_password
+    contract: !secret hydroquebec_contract
+    monitored_variables:
+      - period_total_consumption
+      - yesterday_total_consumption
+      - balance
+  - platform: fitbit
+    clock_format: 24H
+    unit_system: metric
+    monitored_resources:
+      - "activities/tracker/steps"
+      - "activities/tracker/distance"
+      - "activities/tracker/elevation"
+      - "activities/tracker/floors"
+      - "activities/heart"
+      - "sleep/timeInBed"
+      - "devices/battery"
+
+
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+# Cloud
+cloud:
+
+binary_sensor:
+  - platform: mqtt
+    unique_id: dclxvi_online
+    name: DCLXVI Connection Status
+    off_delay: 90
+    state_topic: "hass/message/state/dclxvi_pi"
+  - platform: trend
+    sensors:
+      dclxvi_refuel:
+        friendly_name: DCLXVI Refueled
+        entity_id: sensor.dclxvi_fuel_amount
+      gmail_rising:
+        friendly_name: Gmail is Growing
+        entity_id: !secret gmail_entity_id
+
+nest:
+  client_id: !secret nest_client_id
+  client_secret: !secret nest_client_secret
+
+influxdb:
+  host: !secret influxdb_web_host
+  port: !secret influxdb_web_port
+
+zone:
+  - name: Home
+    latitude: !secret zone_home_latitude
+    longitude: !secret zone_home_longitude
+    radius: 500
+    icon: mdi:castle
+
+  - name: !secret zone_mwork_name
+    latitude: !secret zone_mwork_latitude
+    longitude: !secret zone_mwork_longitude
+    radius: 500
+    icon: mdi:work
+
+  - name: !secret zone_kwork_name
+    latitude: !secret zone_kwork_latitude
+    longitude: !secret zone_kwork_longitude
+    radius: 500
+    icon: mdi:work
+
+  - name: !secret zone_rge_name
+    latitude: !secret zone_rge_latitude
+    longitude: !secret zone_rge_longitude
+    radius: 100
+    icon: mdi:work
+
+  - name: !secret zone_lkn_name
+    latitude: !secret zone_lkn_latitude
+    longitude: !secret zone_lkn_longitude
+    radius: 500
+    icon: mdi:castle
+
+
+mqtt:
+  broker: !secret mqtt_host
+  port: !secret mqtt_port
+  username: !secret mqtt_user
+  password: !secret mqtt_password
+  certificate: /config/certs/ca-bundle.crt
+
+mqtt_eventstream:
+  publish_topic: hass/eventstream/master
+  subscribe_topic: hass/eventstream/slaves/#
+  ignore_event:
+    - call_service
+    - state_changed
+
+panel_iframe:
+  grafana:
+    title: 'Grafana'
+    url: !secret grafana_web_url
+    icon: mdi:gauge
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+
+tellduslive:
+
+camera:
+  - platform: mqtt
+    name: DCLXVI Windshield Image
+    unique_id: dclxvi_pi_front
+    topic: hass/message/image/dclxvi_pi/front
+  - platform: mjpeg
+    name: !secret camera_tunnel_rge_back_name
+    mjpeg_url: !secret camera_tunnel_rge_back_url
+  - platform: mjpeg
+    name: !secret camera_tunnel_rge_front_name
+    mjpeg_url: !secret camera_tunnel_rge_front_url
+  - platform: mjpeg
+    name: !secret camera_tunnel_rge_lroom_name
+    mjpeg_url: !secret camera_tunnel_rge_lroom_url
+  - platform: mjpeg
+    name: !secret camera_tunnel_rge_sat_name
+    mjpeg_url: !secret camera_tunnel_rge_sat_url
+  - platform: mjpeg
+    name: !secret camera_tunnel_rge_dtop_name
+    mjpeg_url: !secret camera_tunnel_rge_dtop_url
+  - platform: mjpeg
+    name: !secret camera_tunnel_rge_attic_name
+    mjpeg_url: !secret camera_tunnel_rge_attic_url
+  - platform: mjpeg
+    name: !secret camera_tunnel_rge_outhouse_name
+    mjpeg_url: !secret camera_tunnel_rge_outhouse_url
+
+
+volvooncall:
+  username: !secret voc_user
+  password: !secret voc_password
+  region: !secret voc_region
+  
+withings:
+  client_id: !secret withings_client_id
+  client_secret: !secret withings_consumer_secret
+  profiles:
+    - mfo
+
+logger:
+  default: warning
+  logs:
+    homeassistant.components.mqtt: warning
+

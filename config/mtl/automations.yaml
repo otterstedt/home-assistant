@@ -1,0 +1,539 @@
+- id: 'arrive_amplifier'
+  alias: Arrive home amplifier
+  trigger:
+  - entity_id: group.adults
+    from: not_home
+    platform: state
+    to: home
+  condition:
+  - condition: template
+    value_template: "{{ states.media_player.lg_tv_remote.state != 'playing' }}"
+  - condition: template
+    value_template: "{{ states.media_player.rasplex.state != 'playing' }}"
+  action:
+  - data:
+      entity_id: switch.amplifier
+    service: switch.turn_on
+  - data:
+      entity_id: switch.amplifier
+    service: switch.turn_on
+- id: '1541214031926'
+  alias: Arrive home
+  trigger:
+  - entity_id: group.adults
+    from: not_home
+    platform: state
+    to: home
+  condition: []
+  action:
+  - data:
+      entity_id: scene.arriving_home
+    service: scene.turn_on
+  - data:
+      entity_id: switch.tradfri_control_outlet_2
+    service: switch.turn_on
+  - data:
+      entity_id: light.v60_status_bulb
+    service: light.turn_on   
+- id: '1541214031927'
+  alias: Leave home
+  trigger:
+  - entity_id: group.adults
+    from: home
+    platform: state
+    to: not_home
+  condition: []
+  action:
+  - data:
+      entity_id: switch.amplifier
+    service: switch.turn_off
+  - data:
+      entity_id: switch.tradfri_control_outlet
+    service: switch.turn_off
+  - data:
+      entity_id: switch.tradfri_control_outlet
+    service: switch.turn_off
+  - data:
+      entity_id: switch.tradfri_control_outlet_2
+    service: switch.turn_off
+  - data:
+      entity_id: light.v60_status_bulb
+    service: light.turn_off 
+- id: '1541221266908'
+  alias: Media Bedroom
+  trigger:
+  - entity_id: media_player.serverosxprivate
+    platform: state
+    to: playing
+  condition: []
+  action:
+  - data:
+      entity_id: scene.movies_bedroom
+    service: scene.turn_on
+- id: '1542139509598'
+  alias: Michael Arrive Home
+  trigger:
+  - entity_id: device_tracker.michaels_iphone
+    from: not_home
+    platform: state
+    to: home
+  condition: []
+  action:
+  - data:
+      entity_id: scene.smaland
+    service: scene.turn_on
+- id: '1542156439872'
+  alias: Karen Arrive Home
+  trigger:
+  - entity_id: device_tracker.karens
+    from: not_home
+    platform: state
+    to: home
+  condition: []
+  action:
+  - data:
+      entity_id: scene.karen
+    service: scene.turn_on
+- id: '1542156944742'
+  alias: Kitchen on Karen
+  trigger:
+  - entity_id: light.kitchen_1
+    for: 0:00:10
+    from: unavailable
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: device_tracker.karens
+    state: home
+  action:
+  - data:
+      entity_id: scene.karen
+    service: scene.turn_on
+- id: '1542156944842'
+  alias: Kitchen on Michael
+  trigger:
+  - entity_id: light.kitchen_1
+    for: 0:00:05
+    from: unavailable
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: device_tracker.michaels_iphone
+    state: home
+  action:
+  - data:
+      entity_id: scene.smaland
+    service: scene.turn_on
+
+- id: '1542230014070'
+  alias: Check Ikea Kitchen
+  trigger:
+    platform: time_pattern
+    seconds: /30
+  condition:
+  - condition: state
+    entity_id: light.kitchen_1
+    state: 'on'
+  action:
+  - data_template:
+      entity_id: light.kitchen_1
+      brightness: '{{ state_attr(''light.kitchen_1'',''brightness'') | int}}'
+    service: light.turn_on
+
+- id: '1544496872604'
+  alias: Coffee Maker
+  trigger:
+    platform: time
+    at: '05:45'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.work_day
+    state: 'on'
+  action:
+  - data:
+      entity_id: switch.tradfri_control_outlet
+    service: switch.turn_on
+- id: 'lights_wakeup'
+  alias: Wake Up Lights
+  trigger:
+    platform: time
+    at: '06:10'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.work_day
+    state: 'on'
+  - condition: state
+    entity_id: light.kitchen_1
+    state: 'unavailable'
+  action:
+  - data:
+      entity_id: scene.full_light
+    service: scene.turn_on
+- id: '1544498328426'
+  alias: Kitchen on Doro
+  trigger:
+  - entity_id: light.kitchen_1
+    for: 0:00:09
+    from: unavailable
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: device_tracker.a0edcd82b52e
+    state: home
+  action:
+  - data:
+      entity_id: scene.doro
+    service: scene.turn_on
+- id: '1544585294900'
+  alias: Coffee Maker Off
+  trigger:
+    platform: time
+    at: '07:00'
+  condition: []
+  action:
+  - data:
+      entity_id: switch.tradfri_control_outlet
+    service: switch.turn_off
+  - data:
+      entity_id: switch.tradfri_control_outlet
+    service: switch.turn_off
+
+#- id: 'tv_active'
+#  alias: "TV Active"
+#  trigger:
+#  - platform: state
+#    entity_id: media_player.lg_tv_remote
+#    to: 'playing'
+#  condition: []
+#  action:
+#    service: scene.turn_on
+#    entity_id: scene.movies
+
+#- alias: 'TV to channel'
+#  trigger:
+#    platform: template
+#    value_template: '{{ states.media_player.lg_tv_remote.attributes.media_content_type == "channel" }}'
+#  action:
+#  - data:
+#      entity_id: scene.movies
+#    service: scene.turn_on
+#  - data:
+#      entity_id: switch.tradfri_control_outlet_2
+#    service: switch.turn_off 
+
+- id: 'rasplex_playing'
+  alias: "Movie Playing"
+  trigger:
+  - platform: state
+    entity_id: media_player.rasplex
+    to: 'playing'
+  condition: []
+  action:
+  - data:
+      entity_id: scene.movies
+    service: scene.turn_on
+  - data:
+      entity_id: switch.amplifier
+    service: switch.turn_off
+  - data:
+      entity_id: switch.tradfri_control_outlet_2
+    service: switch.turn_off   
+- id: 'chromecast_playing'
+  alias: "Chromecast Playing"
+  trigger:
+  - platform: state
+    entity_id: media_player.brebeufcast
+    to: 'playing'
+  condition: []
+  action:
+  - data:
+      entity_id: scene.movies
+    service: scene.turn_on
+  - data:
+      entity_id: switch.amplifier
+    service: switch.turn_off
+  - data:
+      entity_id: switch.tradfri_control_outlet_2
+    service: switch.turn_off 
+- id: 'rasplex_paused'
+  alias: "Movie Paused"
+  trigger:
+  - platform: state
+    entity_id: media_player.rasplex
+    from: 'playing'
+    to: 'paused'
+  condition: []
+  action:
+  - data:
+      entity_id: scene.movies_paused
+    service: scene.turn_on
+  - data:
+      entity_id: switch.tradfri_control_outlet_2
+    service: switch.turn_on 
+- id: 'sunset_lights'
+  alias: 'Lights on sunset'
+  trigger:
+    platform: sun
+    event: sunset
+  condition:
+    condition: state
+    entity_id: group.adults
+    state: home
+  action:
+  - data:
+      entity_id: switch.tradfri_control_outlet_3
+    service: switch.turn_on
+- id: 'sunrise_lights'
+  alias: 'Lights on sunrise'
+  trigger:
+    platform: sun
+    event: sunrise
+    offset: "+00:15:00"
+  condition: []
+  action:
+  - data:
+      entity_id: switch.tradfri_control_outlet_3
+    service: switch.turn_off
+- id: 'workday_engine'
+  alias: Car engine on cold work day
+  trigger:
+    platform: time
+    at: '06:35'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.work_day
+    state: 'on'
+  - condition: numeric_state
+    entity_id: 'sensor.yr_temperature'
+    below: 3
+  - condition: state
+    entity_id: device_tracker.michaels_iphone
+    state: 'home'
+  - condition: state
+    entity_id: light.kitchen_1
+    state: 'on'    
+  action:
+  - data:
+      entity_id: switch.dclxvi_engine
+    service: switch.turn_on
+
+- id: 'v60_check_bulb'
+  alias: V60 Check Bulb
+  trigger:
+    platform: time_pattern
+    seconds: /30
+  condition:
+  - condition: state
+    entity_id: light.v60_status_bulb
+    state: 'on'
+  action:
+  - data_template:
+      entity_id: light.v60_status_bulb
+      brightness: '{{ state_attr(''light.v60_status_bulb'',''brightness'') | int}}'
+    service: light.turn_on
+
+- id: 'v60_engine_start_switch'
+  alias: V60 Engine Start Switch
+  trigger:
+  - entity_id: light.v60_status_bulb
+    for: 0:00:10
+    from: unavailable
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id:  device_tracker.volvo_dclxvi
+    state: 'home'
+  - condition: state
+    entity_id: group.adults
+    state: 'home' 
+  action:
+  - data_template:
+      entity_id: switch.dclxvi_engine
+    service: switch.turn_on
+
+- id: 'v60_engine_not_running'
+  alias: V60 Engine is not running
+  trigger:
+  - platform: state
+    entity_id:  binary_sensor.dclxvi_engine
+    to: 'off'
+  - platform: state
+    entity_id:  light.v60_status_bulb
+    to: 'on'
+  condition: 
+  - condition: state
+    entity_id: binary_sensor.dclxvi_engine
+    state: 'off'
+  - condition: state
+    entity_id:  device_tracker.volvo_dclxvi
+    state: 'not_home' 
+  - condition: state
+    entity_id: group.adults
+    state: 'home'
+  action:
+  - data_template:
+      entity_id:  scene.v60_engine_not_running
+    service: scene.turn_on
+
+- id: 'v60_engine_running'
+  alias: V60 Engine is running
+  trigger:
+  - platform: state
+    entity_id:  binary_sensor.dclxvi_engine
+    to: 'on'
+  - platform: state
+    entity_id:  light.v60_status_bulb
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.dclxvi_connection_status
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.dclxvi_engine
+    state: 'on'
+  - condition: state
+    entity_id: group.adults
+    state: 'home' 
+  action:
+  - data_template:
+      entity_id:  scene.v60_engine_running
+    service: scene.turn_on
+
+- id: 'v60_tracker_online'
+  alias: V60 Tracker is Online
+  trigger:
+  - platform: state
+    entity_id:  binary_sensor.dclxvi_connection_status
+    to: 'on'
+  - platform: state
+    entity_id:  light.v60_status_bulb
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id:  binary_sensor.dclxvi_connection_status
+    state: 'on'
+  - condition: state
+    entity_id: group.adults
+    state: 'home'
+  action:
+  - data_template:
+      entity_id:  scene.v60_tracker_connected
+    service: scene.turn_on
+
+- id: 'v60_tracker_offline'
+  alias: V60 Tracker is Offline
+  trigger:
+  - platform: state
+    entity_id:  binary_sensor.dclxvi_connection_status
+    to: 'off'
+  - platform: state
+    entity_id:  light.v60_status_bulb
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.dclxvi_engine
+    state: 'on'
+  - condition: state
+    entity_id:  binary_sensor.dclxvi_connection_status
+    state: 'off'
+  - condition: state
+    entity_id: group.adults
+    state: 'home'
+  action:
+  - data_template:
+      entity_id:  scene.v60_engine_running
+    service: scene.turn_on
+
+- id: 'v60_tracker_home'
+  alias: V60 Tracker Arrives Home
+  trigger:
+  - platform: state
+    entity_id:  device_tracker.dclxvi_pi
+    to: 'home'
+  condition:
+  - condition: state
+    entity_id: group.adults
+    state: 'home'
+  action:
+  - data_template:
+      entity_id:  scene.v60_tracker_home
+    service: scene.turn_on
+
+- id: 'v60_voc_home'
+  alias: V60 VoC is Home
+  trigger:
+  - platform: state
+    entity_id:  binary_sensor.dclxvi_engine
+    to: 'off'
+  - platform: state
+    entity_id:  device_tracker.volvo_dclxvi
+    to: 'home'
+  - platform: state
+    entity_id:  binary_sensor.dclxvi_connection_status
+    to: 'off'
+  - platform: state
+    entity_id:  light.v60_status_bulb
+    to: 'on'
+  - platform: state
+    entity_id: lock.dclxvi_door_lock
+    to: 'locked'
+  condition:
+  - condition: state
+    entity_id:  device_tracker.volvo_dclxvi
+    state: 'home' 
+  - condition: state
+    entity_id: binary_sensor.dclxvi_engine
+    state: 'off'
+  - condition: state
+    entity_id: group.adults
+    state: 'home' 
+  action:
+  - data_template:
+      entity_id:  scene.v60_tracker_home
+    service: scene.turn_on
+
+- id: 'v60_unlocked'
+  alias: V60 is Unlocked
+  trigger:
+  - platform: state
+    for: 0:05:0
+    entity_id: lock.dclxvi_door_lock
+    to: 'unlocked'
+  - platform: state
+    entity_id:  light.v60_status_bulb
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.dclxvi_engine
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.dclxvi_connection_status
+    state: 'off'
+  - condition: state
+    entity_id: lock.dclxvi_door_lock
+    state: 'unlocked'
+  - condition: state
+    entity_id: group.adults
+    state: 'home'
+  action:
+  - data_template:
+      entity_id:  scene.v60_unlocked
+    service: scene.turn_on
+
+
+- id: 'aquarium_is_too_hot'
+  alias: 'Aquarium is too hot'
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.aquarium_temperature
+    above: 27
+  condition: []
+  action:
+  - data_template:
+      entity_id: switch.aqua_heater
+    service: switch.turn_off
+    

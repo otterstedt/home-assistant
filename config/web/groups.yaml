@@ -1,0 +1,122 @@
+dclxvi:
+  name: DCLXVI
+  entities:
+    - device_tracker.volvo_dclxvi
+    - binary_sensor.dclxvi_engine 
+    - sensor.dclxvi_to_home
+    - switch.dclxvi_engine
+    - switch.dclxvi_heater
+    - binary_sensor.dclxvi_bulbs
+    - binary_sensor.dclxvi_hood
+    - binary_sensor.dclxvi_doors
+    - binary_sensor.dclxvi_front_left_door
+    - binary_sensor.dclxvi_front_right_door
+    - binary_sensor.dclxvi_rear_left_door
+    - binary_sensor.dclxvi_rear_right_door
+    - binary_sensor.dclxvi_service
+    - binary_sensor.dclxvi_washer_fluid
+    - binary_sensor.dclxvi_brake_fluid
+    - binary_sensor.dclxvi_windows
+    - binary_sensor.dclxvi_front_left_window
+    - binary_sensor.dclxvi_front_right_window
+    - binary_sensor.dclxvi_rear_left_window
+    - binary_sensor.dclxvi_rear_right_window
+    - lock.dclxvi_door_lock 
+    - sensor.dclxvi_fuel_amount
+    - sensor.dclxvi_fuel_consumption
+    - sensor.dclxvi_fuel_level
+    - binary_sensor.dclxvi_refuel
+    - sensor.dclxvi_last_trip
+    - sensor.dclxvi_odometer
+    - sensor.dclxvi_trip_meter_1
+    - sensor.dclxvi_trip_meter_2
+    - sensor.dclxvi_odometer_10k
+    - sensor.dclxvi_odometer_insurance_period
+    - sensor.dclxvi_range
+
+dclxvi_tracker:
+  name: DCLXVI Tracker
+  entities:
+    - camera.dclxvi_windshield_image
+    - binary_sensor.dclxvi_online
+    - sensor.dclxvi_tracker_last_seen
+    - sensor.dclxvi_tracker_last_seen_duration
+    - sensor.dclxvi_tracker_speed
+    - sensor.dclxvi_tracker_speed_coordinates 
+    - sensor.dclxvi_tracker_to_home
+    - sensor.dclxvi_tracker_speed_temp
+    - sensor.dclxvi_tracker_speed_humidity
+    - sensor.dclxvi_tracker_speed_pressure
+
+travel:
+  name: Travel Time
+  entities:
+    - sensor.dclxvi_to_home
+    - sensor.to_home_dclxvi_diff
+
+certificates:
+  name: SSL Certificates
+  entities:
+    - sensor.tracks_otternet_ca
+    - sensor.www_otternet_ca
+    - sensor.grafana_otternet_ca
+    - sensor.mqtt_otternet_ca
+    - sensor.hass_otternet_ca
+    - sensor.maps_otternet_ca
+    - sensor.kartrak_otternet_ca
+
+weather:
+  name: Weather Rävgrävle
+  entities:
+    - sensor.temp_patio_temperature
+    - sensor.temp_patio_humidity
+
+climate_mtl:
+  name: Climate MTL
+  entities:
+    - sensor.mtl_livingroom_temperature
+    - sensor.mtl_bedroom_temperature
+    - climate.aquarium_thermostat
+    - sensor.aquarium_temperature
+
+climate_rge:
+  name: Climate RGE
+  entities:
+    - sensor.rge_bedroom_temperature
+    - sensor.rge_door_temperature
+    
+fitbit_otterstedt:
+  name: Fitbit Michael
+  entities:
+    - sensor.tracker_steps
+    - sensor.tracker_distance
+    - sensor.tracker_elevation
+    - sensor.tracker_floors
+    - sensor.resting_heart_rate
+    - sensor.sleep_time_in_bed
+    - sensor.versa_battery
+
+hydroquebec:
+  name: Hydro Quebec
+  entities:
+    - sensor.hydro_quebec_bill
+    - sensor.hydro_quebec_consumption
+
+rge:
+ name: Rävgrävle
+ entities:
+   - binary_sensor.backyard_camera_motion_detected
+   - binary_sensor.backyard_camera_online
+   - binary_sensor.backyard_camera_person_detected
+   - binary_sensor.backyard_camera_sound_detected
+   - camera.backyard
+   - sensor.temppatio_temperature
+   - sensor.temppatio_humidity
+   - camera.ipcam_back
+   - camera.ipcam_front
+   - camera.ipcam_livingroom
+   - camera.rpi_cam
+
+    
+   
+

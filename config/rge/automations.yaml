@@ -1,0 +1,48 @@
+- id: '1542399479370'
+  alias: Turn on back cam
+  trigger:
+  - entity_id: device_tracker.ipcambacklan
+    from: home
+    platform: state
+    to: not_home
+  condition: []
+  action:
+  - data:
+      entity_id: switch.camgardendoor
+    service: switch.turn_on
+- id: '1542399583462'
+  alias: Turn on front cam
+  trigger:
+  - entity_id: device_tracker.ipcamfrontlan
+    from: home
+    platform: state
+    to: not_home
+  condition: []
+  action:
+  - data:
+      entity_id: switch.cambedroom
+    service: switch.turn_on
+- id: '1542399673362'
+  alias: Turn On Living Cam
+  trigger:
+  - entity_id: device_tracker.ipcamlivinglan
+    from: home
+    platform: state
+    to: not_home
+  condition: []
+  action:
+  - data:
+      entity_id: switch.bigroom
+    service: switch.turn_on
+- id: '1542400977700'
+  alias: Turn on rpi sat
+  trigger:
+  - entity_id: device_tracker.rpisatlan
+    from: home
+    platform: state
+    to: not_home
+  condition: []
+  action:
+  - data:
+      entity_id: switch.greenblack
+    service: switch.turn_on
