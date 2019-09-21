@@ -110,6 +110,9 @@ camera:
     name: !secret camera_rge_dtop_name
     mjpeg_url: !secret camera_rge_dtop_url
   - platform: mjpeg
+    name: !secret camera_rge_acer_name
+    mjpeg_url: !secret camera_rge_acer_url
+  - platform: mjpeg
     name: !secret camera_rge_attic_name
     mjpeg_url: !secret camera_rge_attic_url
   - platform: mjpeg
