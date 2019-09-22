@@ -34,15 +34,3 @@
   - data:
       entity_id: switch.bigroom
     service: switch.turn_on
-- id: '1542400977700'
-  alias: Turn on rpi sat
-  trigger:
-  - entity_id: device_tracker.rpisatlan
-    from: home
-    platform: state
-    to: not_home
-  condition: []
-  action:
-  - data:
-      entity_id: switch.greenblack
-    service: switch.turn_on
