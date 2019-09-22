@@ -89,6 +89,8 @@ tts:
 # Cloud
 cloud:
 
+speedtestdotnet:
+
 wwlln:
   radius: 50
 
