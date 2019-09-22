@@ -169,6 +169,9 @@ panel_iframe:
 upnp:
   sensors: true
   port_mapping: false
+  
+lovelace:
+  mode: yaml
 
 group: !include groups.yaml
 automation: !include automations.yaml
