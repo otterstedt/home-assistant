@@ -205,6 +205,25 @@ sensor:
     state_topic: hass/message/hydroquebec/brebeuf
     value_template: "{{ value_json.yesterday_total_consumption }}"
     unit_of_measurement: 'kWh'
+  - platform: mqtt
+    name: Hydro Quebec Bill Silverlyckan
+    unique_id: hydroquebec_bill_sln
+    state_topic: hass/message/hydroquebec/silverlyckan
+    value_template: "{{ value_json.period_total_bill }}"
+    unit_of_measurement: 'CAD'
+    json_attributes:
+      - balance
+      - period_projection
+      - period_length
+      - period_total_days
+      - period_total_consumption
+      - yesterday_total_consumption
+  - platform: mqtt
+    name: Hydro Quebec Consumption Silverlyckan
+    unique_id: hydroquebec_consumption_sln
+    state_topic: hass/message/hydroquebec/silverlyckan
+    value_template: "{{ value_json.yesterday_total_consumption }}"
+    unit_of_measurement: 'kWh'
   - platform: hydroquebec
     username: !secret hydroquebec_user
     password: !secret hydroquebec_password
