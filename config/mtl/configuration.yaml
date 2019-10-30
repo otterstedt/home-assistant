@@ -275,6 +275,16 @@ sensor:
     unit_of_measurement: '°C'
     value_template: "{{ value_json['32206']['value'] }}"
     json_attributes_topic: "hass/message/sensorist/mtl"
+  - platform: waze_travel_time
+    name: K to Work
+    origin: Sainte-Catherine, QC
+    destination: Montréal, QC H2K 2W1
+    region: 'US'
+  - platform: waze_travel_time
+    name: K From Work
+    origin: Montréal, QC H2K 2W1
+    destination: Sainte-Catherine, QC
+    region: 'US'
 
 
 
