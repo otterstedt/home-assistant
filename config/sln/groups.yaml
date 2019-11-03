@@ -1,1 +1,11 @@
+adults:
+  name: Adult devices
+  entities:
+    - device_tracker.iphone
+    - device_tracker.karens
 
+kids:
+  name: Kid devices
+  entities:
+    - device_tracker.loser
+    - device_tracker.galaxy_s5_neo
