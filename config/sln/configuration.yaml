@@ -1,0 +1,62 @@
+ 
+# Configure a default setup of Home Assistant (frontend, api, etc) 
+default_config: 
+ 
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc. 
+# http: 
+#   base_url: example.duckdns.org:8123 
+ 
+amcrest: 
+  - host: 10.0.1.52 
+    username: admin 
+    password: !secret mqtt_password 
+ 
+device_tracker: 
+  - platform: bluetooth_tracker 
+  - platform: bluetooth_le_tracker 
+    track_new_devices: true 
+  - platform: nmap_tracker 
+    hosts: 10.0.1.0/24 
+    home_interval: 1 
+ 
+influxdb: 
+ 
+mqtt: 
+  broker: !secret mqtt_host 
+  port: !secret mqtt_port 
+  username: !secret mqtt_user 
+  password: !secret mqtt_password 
+  certificate: /etc/ssl/certs/ca-certificates.crt 
+ 
+mqtt_statestream: 
+  base_topic: hass/statestream 
+  publish_attributes: true 
+  publish_timestamps: true
+
+mqtt_eventstream:
+  publish_topic: hass/eventstream/slaves/sln
+  subscribe_topic: hass/eventstream/master
+
+plex:
+  host: 10.0.1.2
+  port: 32400
+
+speedtestdotnet:
+
+tellduslive:
+  host: 10.0.1.25
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+upnp:
+  sensors: true
+  port_mapping: false
+
+wwlln:
+  radius: 50
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
