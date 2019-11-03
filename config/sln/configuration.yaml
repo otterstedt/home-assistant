@@ -22,6 +22,8 @@ device_tracker:
   - platform: nmap_tracker 
     hosts: 10.0.1.0/24 
     home_interval: 1 
+    
+discovery:
  
 influxdb: 
  
