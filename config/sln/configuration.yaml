@@ -4,7 +4,9 @@ default_config:
  
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc. 
 # http: 
-#   base_url: example.duckdns.org:8123 
+#   base_url: example.duckdns.org:8123
+http:
+  api_password: !secret http_api_password
  
 amcrest: 
   - host: 10.0.1.52 
