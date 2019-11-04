@@ -14,6 +14,12 @@ amcrest:
   - host: 10.0.1.52 
     username: admin 
     password: !secret mqtt_password 
+    binary_sensors:
+      - motion_detected
+      - online
+    sensors:
+      - sdcard
+      - ptz_preset
  
 device_tracker: 
   - platform: bluetooth_tracker 
