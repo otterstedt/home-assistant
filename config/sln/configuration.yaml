@@ -21,7 +21,12 @@ amcrest:
     sensors:
       - sdcard
       - ptz_preset
- 
+
+camera:
+  - platform: mjpeg
+    name: !secret camera_sln_washer_name
+    mjpeg_url: !secret camera_sln_washer_url
+
 device_tracker: 
   - platform: bluetooth_tracker 
   - platform: bluetooth_le_tracker 
