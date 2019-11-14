@@ -9,3 +9,10 @@ kids:
   entities:
     - person.dorothee
     - person.olivier
+    
+pets:
+  name: Pet Devices
+  entities:
+    - person.sven
+    - person.gustaf
+    - person.loki
