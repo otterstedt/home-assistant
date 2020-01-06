@@ -21,6 +21,15 @@ amcrest:
     sensors:
       - sdcard
       - ptz_preset
+  - host: 10.0.1.54 
+    username: admin 
+    password: !secret mqtt_password 
+    binary_sensors:
+      - motion_detected
+      - online
+    sensors:
+      - sdcard
+      - ptz_preset
 
 camera:
   - platform: mjpeg
