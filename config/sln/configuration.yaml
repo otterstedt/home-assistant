@@ -11,6 +11,7 @@ default_config:
 #   - type: legacy_api_password
 #     api_password: !secret http_api_password
  
+ 
 amcrest: 
   - host: 10.0.1.52 
     username: admin 
