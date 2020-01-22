@@ -16,8 +16,8 @@ homeassistant:
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 # http:
 #   base_url: example.duckdns.org:8123
-http:
-  api_password: !secret http_api_password
+#http:
+#  api_password: !secret http_api_password
 
 # Checks for available updates
 # Note: This component will send some information about your system to
