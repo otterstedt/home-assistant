@@ -244,6 +244,11 @@ sensor:
       - "activities/heart"
       - "sleep/timeInBed"
       - "devices/battery"
+  - platform: gpsd
+    name: DCLXVI Remote GPS
+    host: 127.3.1.10
+    port: 2948
+
 
 
 
