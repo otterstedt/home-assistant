@@ -1,5 +1,5 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
-#default_config:
+default_config:
 
 homeassistant:
   # Name of the location where Home Assistant is running
