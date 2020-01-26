@@ -1,13 +1,100 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
-default_config:
+#default_config:
+
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: DCLXVI V60
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret zone_home_latitude
+  longitude: !secret zone_home_longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Montreal
+  # Customization file
+  customize: !include customize.yaml
+  auth_providers:
+    - type: homeassistant
+    - type: legacy_api_password
+      api_password: !secret http_api_password
 
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 # http:
 #   base_url: example.duckdns.org:8123
 
+device_tracker:
+  - platform: bluetooth_tracker
+  - platform: bluetooth_le_tracker
+  - platform: nmap_tracker
+    hosts: 
+      - 192.168.0.0/24
+influxdb:
+
+map:
+
+mqtt:
+  broker: !secret mqtt_host
+  port: !secret mqtt_port
+  username: !secret mqtt_user
+  password: !secret mqtt_password
+  certificate: /etc/ssl/certs/ca-certificates.crt
+
+mqtt_statestream:
+  base_topic: hass/statestream
+  publish_attributes: true
+  publish_timestamps: true
+
+mqtt_eventstream:
+  publish_topic: hass/eventstream/slaves/v60
+  subscribe_topic: hass/eventstream/master
+
+sensor:
+  - platform: gpsd
+    name: Pi GPS
+    host: 192.168.0.10
+    port: 2948
+
 # Text to speech
 tts:
   - platform: google_translate
+
+volvooncall:
+  username: !secret voc_user
+  password: !secret voc_password
+  region: !secret voc_region
+  resources:
+    - position 
+    - engine_start
+    - heater
+    - is_engine_running
+    - lock
+
+zone:
+  - name: Home
+    latitude: !secret zone_home_latitude
+    longitude: !secret zone_home_longitude
+    radius: 500
+    icon: mdi:castle
+
+  - name: !secret zone_mwork_name
+    latitude: !secret zone_mwork_latitude
+    longitude: !secret zone_mwork_longitude
+    radius: 500
+    icon: mdi:work
+
+  - name: !secret zone_kwork_name
+    latitude: !secret zone_kwork_latitude
+    longitude: !secret zone_kwork_longitude
+    radius: 500
+    icon: mdi:work
+
+  - name: !secret zone_lkn_name
+    latitude: !secret zone_lkn_latitude
+    longitude: !secret zone_lkn_longitude
+    radius: 500
+    icon: mdi:castle
 
 group: !include groups.yaml
 automation: !include automations.yaml
