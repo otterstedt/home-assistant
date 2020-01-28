@@ -1,20 +1,13 @@
 adults:
   name: Adult devices
   entities:
-    - device_tracker.iphone
-    - device_tracker.karens
+    - person.michael
+    - person.karen
 
 kids:
   name: Kid devices
   entities:
-    - device_tracker.loser
-    - device_tracker.galaxy_s5_neo
-
-devices:
-  name: Devices
-  entities:
-    - device_tracker.0403d6dab4bc
-    - device_tracker.v60ws
+    - person.doro
 
 dclxvi_pi:
   name: DCLXVI Tracker
@@ -22,7 +15,6 @@ dclxvi_pi:
     - camera.dclxvi_windshield_image
     - binary_sensor.dclxvi_connection_status
     - device_tracker.dclxvi_pi
-    - light.v60_status_bulb
     - automation.v60_check_bulb
     - automation.v60_engine_start_switch
     - automation.v60_engine_is_not_running
@@ -33,22 +25,12 @@ dclxvi_pi:
     - automation.v60_voc_is_home
     - automation.v60_is_unlocked
 
-litterboxes:
-  name: Litter Boxes
-  entities:
-    - light.tradfri_transformer_10w_2
-    - light.tradfri_transformer_10w
-
 pets:
-  name: Pets
+  name: Pet Devices
   entities:
-    - group.litterboxes
-    - sensor.litter_box_blue
-    - light.tradfri_transformer_10w_2
-    - sensor.litter_box_grey
-    - light.tradfri_transformer_10w
-    - switch.aquarium
-    - light.kitchen_aquarium
+    - person.sven
+    - person.gustaf
+    - person.loki
 
 #travel:
 #  name: Travel Time
@@ -64,19 +46,12 @@ pets:
 #    - sensor.dclxvi_to_home
 #    - sensor.to_home_dclxvi_diff
 
-kitchen:
-  name: Kitchen
-  entities:
-    - light.kitchen_1
-    - light.kitchen_2
-    - light.kitchen_3
-    - light.tradfri_transformer_10w_3
-    - sensor.skrubb
+
 
 otterstedt:
   name: Michael
   entities:
-    - device_tracker.michaels_iphone
+    - device_tracker.bc_fe_d9_7c_77_06
     - binary_sensor.work_day
     - !secret gmail_entity_id
  #   - binary_sensor.gmail_rising
@@ -90,7 +65,7 @@ otterstedt:
 fraser:
   name: Karen
   entities:
-    - device_tracker.karens
+    - device_tracker.b8_53_ac_be_ed_1e
 #    - sensor.to_crites__riddell
 #    - sensor.to_crites__riddell_diff
 #    - sensor.from_crites__riddell
