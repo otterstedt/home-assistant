@@ -86,6 +86,26 @@ sensor:
     destination: zone.home
     region: 'US'
   - platform: waze_travel_time
+    name: "DCLXVI Tracker to Chalet"
+    origin: sensor.dclxvi_tracker_speed
+    destination: zone.ravgravle_ii_lyckan
+    region: 'US' 
+  - platform: waze_travel_time
+    name: "DCLXVI to Chalet"
+    origin: device_tracker.volvo_dclxvi
+    destination: zone.ravgravle_ii_lyckan
+    region: 'US'
+  - platform: waze_travel_time
+    name: "Home to Chalet"
+    origin: zone.home
+    destination: zone.ravgravle_ii_lyckan
+    region: 'US'
+  - platform: waze_travel_time
+    name: "Chalet to Home"
+    origin: zone.ravgravle_ii_lyckan
+    destination: zone.home
+    region: 'US'
+  - platform: waze_travel_time
     name: "DCLXVI to Home Usual"
     destination: zone.home
     origin: device_tracker.volvo_dclxvi
