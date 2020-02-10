@@ -73,6 +73,9 @@ plex:
   host: 10.0.1.2
   port: 32400
 
+prometheus:
+  namespace: hass_sln
+
 speedtestdotnet:
 
 tellduslive:
