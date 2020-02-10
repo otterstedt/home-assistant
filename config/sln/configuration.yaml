@@ -6,10 +6,11 @@ default_config:
 # http: 
 #   base_url: example.duckdns.org:8123
 
-#homeassistant:
-#  auth_providers:
-#   - type: legacy_api_password
-#     api_password: !secret http_api_password
+homeassistant:
+  auth_providers:
+    - type: homeassistant
+    - type: legacy_api_password
+      api_password: !secret http_api_password
  
  
 amcrest: 
