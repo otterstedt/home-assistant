@@ -257,8 +257,8 @@ script:
     - service: media_extractor.play_media
       data:
         entity_id: media_player.55_tcl_roku_tv
-        media_content_type: video/youtube
-        media_content_id: https://www.youtube.com/watch?v=DoM6IhfY8No
+        media_content_type: 'video/youtube'
+        media_content_id: 'https://www.youtube.com/watch?v=DoM6IhfY8No'
         
 
 # Sensors
