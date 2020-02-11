@@ -133,6 +133,8 @@ lutron_caseta:
 # Enables a map showing the location of tracked devices
 map:
 
+media_extractor:
+
 media_player:
   - platform: plex
     scan_interval: 1
@@ -159,6 +161,9 @@ mqtt_eventstream:
   
 prometheus:
   namespace: hass_mtl
+  
+roku:
+  - host: 10.0.1.18
 
 scene:
   - name: Canadiens
