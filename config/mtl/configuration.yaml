@@ -54,6 +54,8 @@ camera:
     name: DCLXVI Windshield Image
     unique_id: dclxvi_pi_front
     topic: hass/message/image/dclxvi_pi/front
+  - platform: environment_canada
+
 
 climate:
   - platform: generic_thermostat
