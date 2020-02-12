@@ -135,13 +135,13 @@ map:
 
 media_extractor:
 
-media_player:
-  - platform: plex
-    scan_interval: 1
-    show_all_controls: True
-  - platform: lg_netcast
-    host: 10.0.1.4
-    access_token: !secret plex_token
+#media_player:
+#  - platform: plex
+#    scan_interval: 1
+#    show_all_controls: True
+#  - platform: lg_netcast
+#    host: 10.0.1.4
+#    access_token: !secret plex_token
 
 mqtt:
   broker: !secret mqtt_host
@@ -158,7 +158,11 @@ mqtt_statestream:
 mqtt_eventstream:
   publish_topic: hass/eventstream/slaves/mtl
   subscribe_topic: hass/eventstream/master
-  
+
+plex:
+  host: 10.0.1.12
+  token: !secret plex_token
+
 prometheus:
   namespace: hass_mtl
   
