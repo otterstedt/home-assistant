@@ -1,1 +1,35 @@
-
+- id: '1579890137263'
+  alias: Car arrives
+  description: ''
+  trigger:
+  - entity_id: person.dclxvi
+    event: enter
+    platform: zone
+    zone: zone.home
+  condition: []
+  action:
+  - device_id: 922a41c5784946e0954cc5ac8fab4967
+    domain: light
+    entity_id: light.approach_lamp
+    type: turn_on
+  - device_id: 1fe3978e532041e980d3e7535970d390
+    domain: light
+    entity_id: light.basement_outdoor_lamp
+    type: turn_on
+  - device_id: 5099556d121a4953914419fa2db47a5c
+    domain: switch
+    entity_id: switch.balcony_power_2
+    type: turn_on
+- id: '1581717740537'
+  alias: Karen arrives
+  description: ''
+  trigger:
+  - entity_id: person.karen
+    event: enter
+    platform: zone
+    zone: zone.home
+  condition: []
+  action:
+  - delay: 00:03:00
+  - entity_id: script.goat4sale
+    service: script.turn_on
