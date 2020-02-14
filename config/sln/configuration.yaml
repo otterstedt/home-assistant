@@ -52,6 +52,8 @@ device_tracker:
 discovery:
  
 influxdb: 
+
+media_extractor:
  
 mqtt: 
   broker: !secret mqtt_host 
