@@ -23,15 +23,15 @@ amcrest:
     sensors:
       - sdcard
       - ptz_preset
-  - host: 10.0.1.54 
-    username: admin 
-    password: !secret mqtt_password 
-    binary_sensors:
-      - motion_detected
-      - online
-    sensors:
-      - sdcard
-      - ptz_preset
+#  - host: 10.0.1.54 
+#    username: admin 
+#    password: !secret mqtt_password 
+#    binary_sensors:
+#      - motion_detected
+#      - online
+#    sensors:
+#      - sdcard
+#      - ptz_preset
 
 camera:
   - platform: mjpeg
@@ -81,6 +81,38 @@ plex:
 
 prometheus:
   namespace: hass_sln
+
+sensor:
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+      - 'date_time'
+      - 'date_time_utc'
+      - 'date_time_iso'
+      - 'time_date'
+      - 'time_utc'
+      - 'beat'
+  - platform: template
+    sensors:
+      timetopoubelle:
+        friendly_name: Days to Poubelle
+        entity_id: sensor.time
+        value_template: >-
+          {% if states.calendar.marbleton_poubelle.attributes.start_time %}
+            {{((as_timestamp(states.calendar.marbleton_poubelle.attributes.start_time) - as_timestamp(now())) / ( 60 * 60 * 24 ) ) | default(99) | int }}
+          {%- else -%}
+            0
+          {%- endif %}
+      timetorecyclage:
+        friendly_name: Days to Recyclage
+        entity_id: sensor.time
+        value_template: >-
+          {% if states.calendar.marbleton_recyclage.attributes.start_time %}
+            {{((as_timestamp(states.calendar.marbleton_recyclage.attributes.start_time) - as_timestamp(now())) / ( 60 * 60 * 24 ) ) | default(99) | int }}
+          {%- else -%}
+            0
+          {%- endif %}
 
 speedtestdotnet:
 
