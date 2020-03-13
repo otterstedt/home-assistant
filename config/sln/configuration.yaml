@@ -100,7 +100,7 @@ sensor:
         entity_id: sensor.time
         value_template: >-
           {% if states.calendar.marbleton_poubelle.attributes.start_time %}
-            {{((as_timestamp(states.calendar.marbleton_poubelle.attributes.start_time) - as_timestamp(now())) / ( 60 * 60 * 24 ) ) | default(99) | round(1, 'common') }}
+            {{((as_timestamp(states.calendar.marbleton_poubelle.attributes.start_time) - as_timestamp(now())) / ( 60 * 60 * 24 ) ) | default(99) | round(2, 'common') }}
           {%- else -%}
             0
           {%- endif %}
@@ -109,7 +109,7 @@ sensor:
         entity_id: sensor.time
         value_template: >-
           {% if states.calendar.marbleton_recyclage.attributes.start_time %}
-            {{((as_timestamp(states.calendar.marbleton_recyclage.attributes.start_time) - as_timestamp(now())) / ( 60 * 60 * 24 ) ) | default(99) | round(1, 'common') }}
+            {{((as_timestamp(states.calendar.marbleton_recyclage.attributes.start_time) - as_timestamp(now())) / ( 60 * 60 * 24 ) ) | default(99) | round(2, 'common') }}
           {%- else -%}
             0
           {%- endif %}
