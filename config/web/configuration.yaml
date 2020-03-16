@@ -301,6 +301,14 @@ nest:
 influxdb:
   host: !secret influxdb_web_host
   port: !secret influxdb_web_port
+  
+input_number:
+  common_budget:
+    name: Budget
+    initial: 650
+    min: 0
+    max: 650
+    step: 1
 
 zone:
   - name: Home
