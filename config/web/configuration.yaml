@@ -308,7 +308,7 @@ input_number:
     initial: 650
     min: 0
     max: 650
-    step: 1
+    step: 5
 
 zone:
   - name: Home
