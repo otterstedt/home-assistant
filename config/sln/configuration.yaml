@@ -115,6 +115,24 @@ sensor:
           {%- else -%}
             0
           {%- endif %}
+      bishoptonpoubelle:
+        friendly_name: Days to Poubelle - Bishopton
+        entity_id: sensor.time
+        value_template: >-
+          {% if states.calendar.bishopton_poubelle.attributes.start_time %}
+            {{((as_timestamp(states.calendar.bishopton_poubelle.attributes.start_time) - as_timestamp(states('sensor.date_time_iso')) ) / ( 60 * 60 * 24 ) ) | default(99) | round(2, 'common') }}
+          {%- else -%}
+            0
+          {%- endif %}
+      bishoptonrecyclage:
+        friendly_name: Days to Recyclage - Bishopton
+        entity_id: sensor.time
+        value_template: >-
+          {% if states.calendar.bishopton_recyclage.attributes.start_time %}
+            {{((as_timestamp(states.calendar.bishopton_recyclage.attributes.start_time) - as_timestamp(states('sensor.date_time_iso')) ) / ( 60 * 60 * 24 ) ) | default(99) | round(2, 'common') }}
+          {%- else -%}
+            0
+          {%- endif %}
 
 speedtestdotnet:
 
