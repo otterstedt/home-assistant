@@ -85,6 +85,9 @@ prometheus:
   namespace: hass_sln
 
 sensor:
+  - platform: opensky
+    radius: 15
+    name: silversky
   - platform: time_date
     display_options:
       - 'time'
