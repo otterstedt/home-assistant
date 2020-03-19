@@ -33,3 +33,13 @@
   - delay: 00:03:00
   - entity_id: script.goat4sale
     service: script.turn_on
+- alias: 'Silver Flight entry notification'
+  trigger:
+    platform: event
+    event_type: opensky_entry
+  action:
+    service: mqtt.publish
+    data_template:
+      payload_template: {{ trigger.event.data.callsign }}
+      topic: hass/message/silversky/callsign
+      retain: true
