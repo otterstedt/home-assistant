@@ -53,6 +53,12 @@ device_tracker:
     
 discovery:
 
+geo_location:
+  - platform: usgs_earthquakes_feed
+    feed_type: 'past_month_all_earthquakes'
+    radius: 50
+    minimum_magnitude: 0.0
+
 google:
   client_id: !secret google_client_id
   client_secret: !secret google_client_secret
