@@ -40,6 +40,6 @@
   action:
     service: mqtt.publish
     data_template:
-      payload_template: {{ trigger.event.data.callsign }}
-      topic: hass/message/silversky/callsign
+      payload_template: "{{ trigger.event.data.callsign }}"
+      topic: "hass/message/silversky/callsign"
       retain: true
