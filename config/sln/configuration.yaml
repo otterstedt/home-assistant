@@ -85,6 +85,10 @@ prometheus:
   namespace: hass_sln
 
 sensor:
+  - platform: mqtt
+    name: Silver Callsign
+    unique_id: silversky_callsign
+    state_topic: "hass/message/silversky/callsign"
   - platform: opensky
     radius: 15
     name: silversky
