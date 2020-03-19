@@ -31,7 +31,7 @@
   condition: []
   action:
   - delay: 00:03:00
-  - entity_id: script.goat4sale
+  - entity_id: script.goat4sale_sous_sol
     service: script.turn_on
 - alias: 'Silver Flight entry notification'
   trigger:
