@@ -3,9 +3,9 @@
   description: ''
   trigger:
   - entity_id: person.dclxvi
-    event: enter
-    platform: zone
-    zone: zone.home
+    platform: state
+    from: "not_home"
+    to: "home"
   condition: []
   action:
   - device_id: 922a41c5784946e0954cc5ac8fab4967
@@ -25,9 +25,9 @@
   description: ''
   trigger:
   - entity_id: person.karen
-    event: enter
-    platform: zone
-    zone: zone.home
+    platform: state
+    from: "not_home"
+    to: "home"
   condition: []
   action:
   - delay: 00:03:00
