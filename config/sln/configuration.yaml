@@ -85,7 +85,7 @@ mqtt_eventstream:
 
 plex:
   host: 10.0.1.2
-  port: 32400
+  port: 32401
 
 prometheus:
   namespace: hass_sln
