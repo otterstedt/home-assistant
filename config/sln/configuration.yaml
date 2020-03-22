@@ -53,6 +53,8 @@ device_tracker:
     
 discovery:
 
+gdacs:
+
 geo_location:
   - platform: usgs_earthquakes_feed
     feed_type: 'past_month_all_earthquakes'
