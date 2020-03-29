@@ -93,6 +93,8 @@ prometheus:
   namespace: hass_sln
 
 sensor:
+  - platform: season
+    name: Season
   - platform: mqtt
     name: Silver Callsign
     unique_id: silversky_callsign
