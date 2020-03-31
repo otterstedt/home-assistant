@@ -16,3 +16,37 @@ pets:
     - person.sven
     - person.gustaf
     - person.loki
+    
+climate_sln:
+  name: Climate Silverlyckan
+  entities:
+    - sensor.bedroom_sln_temperature
+    - sensor.bedroom_sln_humidity
+    - sensor.freezer_sln_temperature
+    - sensor.freezer_sln_humidity
+    - sensor.mediaroom_sln_temperature
+    - sensor.mediaroom_sln_humidity
+    - sensor.kitchen_sln_temperature
+    - sensor.kitchen_sln_humidity
+    - sensor.kitchenout_sln_temperature
+    - sensor.tvroom_sln_temperature
+    - sensor.tvroom_sln_humidity
+    
+network_sln:
+  name: Network Silverlyckan
+  entities:
+    - sensor.speedtest_ping
+    - sensor.speedtest_download
+    - sensor.speedtest_upload
+    
+dclxvi_sln:
+  name: DCLXVI
+  entities:
+    - device_tracker.volvo_dclxvi
+    - binary_sensor.dclxvi_engine
+    - switch.dclxvi_engine
+    - lock.dclxvi_door_lock
+    - sensor.dclxvi_fuel_amount
+    - sensor.dclxvi_fuel_level
+    - sensor.dclxvi_range
+    
