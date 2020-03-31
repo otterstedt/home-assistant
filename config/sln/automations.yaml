@@ -1,3 +1,17 @@
+- id: sunset_lights
+  alias: Lights at sunset
+  trigger:
+    platform: sun
+    event: sunset
+    offset: "-00:15:00"
+  condition:
+    - condition: state
+      entity_id: person.dclxvi
+      state: home
+  action:
+    - service: switch.turn_on
+      entity_id: switch.balcony_power
+
 - id: '1579890137263'
   alias: Car arrives
   description: ''
@@ -18,7 +32,7 @@
     type: turn_on
   - device_id: 5099556d121a4953914419fa2db47a5c
     domain: switch
-    entity_id: switch.balcony_power_2
+    entity_id: switch.balcony_power
     type: turn_on
 - id: '1581717740537'
   alias: Karen arrives
