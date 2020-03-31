@@ -57,7 +57,8 @@ device_tracker:
     track_new_devices: true 
   - platform: nmap_tracker 
     hosts: 10.0.1.0/24 
-    home_interval: 1 
+    home_interval: 10 
+    consider_home: 180
   - platform: tile
     username: !secret tile_username
     password: !secret tile_password
