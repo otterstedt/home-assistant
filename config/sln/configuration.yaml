@@ -39,6 +39,17 @@ camera:
   - platform: mjpeg
     name: !secret camera_sln_washer_name
     mjpeg_url: !secret camera_sln_washer_url
+    
+climate:
+  - platform: generic_thermostat
+    name: Bedroom Thermostat
+    heater: switch.radiator_bedroom
+    target_sensor: sensor.bedroom_sln_temperature
+    max_temp: 24
+    target_temp: 10
+    cold_tolerance: 0.8
+    keep_alive:
+      minutes: 5
 
 device_tracker: 
   - platform: bluetooth_tracker 
