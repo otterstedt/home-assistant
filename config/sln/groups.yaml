@@ -50,3 +50,11 @@ dclxvi_sln:
     - sensor.dclxvi_fuel_level
     - sensor.dclxvi_range
     
+environment_sln:
+  name: Environment
+  entities:
+    - sun.sun
+    - sensor.season
+    - sensor.silversky
+    - sensor.silver_callsign
+    - sensor.dipper_sln_temperature
