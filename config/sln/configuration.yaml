@@ -46,7 +46,6 @@ climate:
     heater: switch.radiator_bedroom
     target_sensor: sensor.bedroom_sln_temperature
     max_temp: 24
-    target_temp: 10
     cold_tolerance: 0.8
     keep_alive:
       minutes: 5
