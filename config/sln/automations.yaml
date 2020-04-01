@@ -96,7 +96,7 @@
         topic: "hass/message/silversky/callsign"
         retain: true
     - service: notify.pushover
-      data:
+      data_template:
         message: "Flyover by: {{ trigger.event.data.callsign }}"
         title: "{{ trigger.event.data.callsign }}"
         data:
