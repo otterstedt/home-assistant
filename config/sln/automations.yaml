@@ -11,6 +11,20 @@
   action:
     - service: switch.turn_on
       entity_id: switch.balcony_power
+      
+- id: sunrise_lights
+  alias: Lights at sunrise
+  trigger:
+    platform: sun
+    event: sunrise
+    offset: "00:15:00"
+  condition:
+    - condition: state
+      entity_id: person.dclxvi
+      state: home
+  action:
+    - service: switch.turn_off
+      entity_id: switch.balcony_power
 
 - id: '1579890137263'
   alias: Car arrives
