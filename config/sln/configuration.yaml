@@ -96,6 +96,12 @@ mqtt_eventstream:
   publish_topic: hass/eventstream/slaves/sln
   subscribe_topic: hass/eventstream/master
 
+notify:
+  - name: pushover
+    platform: pushover
+    api_key: !secret pushover_api_key
+    user_key: !secret pushover_user_key
+
 plex:
   host: 10.0.1.2
   port: 32401
