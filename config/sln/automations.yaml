@@ -61,13 +61,23 @@
   - delay: 00:03:00
   - entity_id: script.goat4sale_sous_sol
     service: script.turn_on
+
 - alias: 'Silver Flight entry notification'
   trigger:
     platform: event
     event_type: opensky_entry
   action:
-    service: mqtt.publish
-    data_template:
-      payload_template: "{{ trigger.event.data.callsign }}"
-      topic: "hass/message/silversky/callsign"
-      retain: true
+    - service: mqtt.publish
+      data_template:
+        payload_template: "{{ trigger.event.data.callsign }}"
+        topic: "hass/message/silversky/callsign"
+        retain: true
+    - service: notify.pushover
+        data:
+          message: "Flyover by: {{ trigger.event.data.callsign }}"
+          title: "{{ trigger.event.data.callsign }}"
+          data:
+            url: "https://flightaware.com/live/flight/{{ trigger.event.data.callsign }}"
+            sound: pianobar
+            priority: 0
+            attachment: "https://w0.pngwave.com/png/942/542/airplane-computer-icons-graphy-aircraft-png-clip-art.png"
