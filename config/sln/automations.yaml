@@ -73,11 +73,11 @@
         topic: "hass/message/silversky/callsign"
         retain: true
     - service: notify.pushover
+      data:
+        message: "Flyover by: {{ trigger.event.data.callsign }}"
+        title: "{{ trigger.event.data.callsign }}"
         data:
-          message: "Flyover by: {{ trigger.event.data.callsign }}"
-          title: "{{ trigger.event.data.callsign }}"
-          data:
-            url: "https://flightaware.com/live/flight/{{ trigger.event.data.callsign }}"
-            sound: pianobar
-            priority: 0
-            attachment: "https://w0.pngwave.com/png/942/542/airplane-computer-icons-graphy-aircraft-png-clip-art.png"
+          url: "https://flightaware.com/live/flight/{{ trigger.event.data.callsign }}"
+          sound: pianobar
+          priority: 0
+          attachment: "https://w0.pngwave.com/png/942/542/airplane-computer-icons-graphy-aircraft-png-clip-art.png"
