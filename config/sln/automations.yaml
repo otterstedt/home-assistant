@@ -1,7 +1,7 @@
 - id: motion_detected_basement_door
   alias: Basement Front Door Motion
   trigger:
-    entity_id: light.approach_lamp	
+    entity_id: light.approach_lamp
     platform: state
     to: on
   condition: 
