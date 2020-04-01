@@ -1,3 +1,26 @@
+- id: motion_detected_basement_door
+  alias: Basement Front Door Motion
+  trigger:
+    entity_id: light.approach_lamp	
+    platform: state
+    to: on
+  condition: 
+    - condition: template
+      value_template: "{{ not is_state('media_player.chambre_principale', 'playing') }}"
+  action:
+    - service: camera.play_stream
+      data:
+        entity_id: camera.amcrest_camera
+        media_player: media_player.chambre_principale
+    - service: mqtt.publish
+      data:
+        payload: on
+        topic: "hass/message/motiondetector/sln/basement/front"
+    - service: notify.pushover
+      data:
+        message: "Motion Detected Silverlyckan: Basement Front"
+        title: "Motion Silverlyckan"
+
 - id: sunset_lights
   alias: Lights at sunset
   trigger:
