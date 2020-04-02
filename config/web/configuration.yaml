@@ -366,6 +366,9 @@ panel_iframe:
     url: !secret grafana_web_url
     icon: mdi:gauge
 
+shell_command:
+  aws_cli: '/usr/local/bin/aws {{ args }}
+
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
