@@ -104,7 +104,7 @@
           sound: pianobar
           priority: 0
           attachment: "https://w0.pngwave.com/png/942/542/airplane-computer-icons-graphy-aircraft-png-clip-art.png"
-    - service: notify.slack
+    - service: notify.slack_smolandia
       data_template:
         message: "Silverlyckan Flyover by: {{ trigger.event.data.callsign }} - https://flightaware.com/live/flight/{{ trigger.event.data.callsign }}"
         title: "{{ trigger.event.data.callsign }}"
