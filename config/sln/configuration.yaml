@@ -36,19 +36,21 @@ amcrest:
 #      - ptz_preset
 
 binary_sensor:
-  person_present:
-    friendly_name: 'Person Present'
-    device_class: presence
-    entity_id:
-      - sensor.time
-    value_template: >
-      {% set ns = namespace(found=false) %}
-      {% for state in states.person %}
-        {% if state.state == 'home' %}
-          {% set ns.found = true %}
-        {% endif %}
-      {% endfor %}
-      {{ns.found}}
+  - platform: template
+    sensors:
+      person_present:
+        friendly_name: 'Person Present'
+        device_class: presence
+        entity_id:
+          - sensor.time
+        value_template: >
+          {% set ns = namespace(found=false) %}
+          {% for state in states.person %}
+            {% if state.state == 'home' %}
+              {% set ns.found = true %}
+            {% endif %}
+          {% endfor %}
+          {{ns.found}}
 
 camera:
   - platform: mjpeg
@@ -118,9 +120,9 @@ notify:
     user_key: !secret pushover_user_key
   - name: slack_smolandia
     platform: slack
-    api_key: !secret slack_smolandia_access_token
+    api_key: !secret slack_smolandia_hasse_access_token
     default_channel: '#automation-notifications'
-    username: HassE
+    username: hasse
 
 plex:
   host: 10.0.1.2
