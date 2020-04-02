@@ -273,7 +273,7 @@ sensor:
     json_attributes:
       - Reservations
     command: !secret aws_instance_ict_status_command
-    value_template: '{{ value_json.Reservations[0].Instances[0].State }}'
+    value_template: '{{ value_json.Reservations[0].Instances[0].State.Name }}'
 
 
 
