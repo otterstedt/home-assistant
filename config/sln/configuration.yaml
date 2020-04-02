@@ -35,6 +35,21 @@ amcrest:
 #      - sdcard
 #      - ptz_preset
 
+binary_sensor:
+  person_present:
+    friendly_name: 'Person Present'
+    device_class: presence
+    entity_id:
+      - sensor.time
+    value_template: >
+      {% set ns = namespace(found=false) %}
+      {% for state in states.person %}
+        {% if state.state == 'home' %}
+          {% set ns.found = true %}
+        {% endif %}
+      {% endfor %}
+      {{ns.found}}
+
 camera:
   - platform: mjpeg
     name: !secret camera_sln_washer_name
