@@ -101,6 +101,11 @@ notify:
     platform: pushover
     api_key: !secret pushover_api_key
     user_key: !secret pushover_user_key
+  - name: slack_smolandia
+    platform: slack
+    api_key: !secret slack_smolandia_access_token
+    default_channel: '#automation-notifications'
+    username: HassE
 
 plex:
   host: 10.0.1.2
