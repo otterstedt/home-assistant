@@ -107,5 +107,15 @@
     - service: notify.slack_smolandia
       data_template:
         message: "Silverlyckan Flyover by: {{ trigger.event.data.callsign }} - https://flightaware.com/live/flight/{{ trigger.event.data.callsign }}"
+        title: "Flight: {{ trigger.event.data.callsign }} Altitude: {{ trigger.event.data.altitude }}"
+        
+- alias: 'Silver Flight exity notification'
+  trigger:
+    platform: event
+    event_type: opensky_exit
+  action:
+    - service: notify.slack_smolandia
+      data_template:
+        message: "Silverlyckan Flyover Exit: {{ trigger.event.data.callsign }} - https://flightaware.com/live/flight/{{ trigger.event.data.callsign }}"
         title: "{{ trigger.event.data.callsign }}"
 
