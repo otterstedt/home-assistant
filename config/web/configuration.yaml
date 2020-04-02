@@ -267,7 +267,13 @@ sensor:
   - platform: gpsd
     name: DCLXVI Remote GPS
     host: 127.3.1.10
-    port: 2948
+    port: 2947
+  - platform: command_line
+    name: ICT Instance
+    json_attributes:
+      - Reservations
+    command: !secret aws_instance_ict_status_command
+    value_template: '{{ value_json.Reservations[0].Instances[0].State }}'
 
 
 
