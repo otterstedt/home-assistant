@@ -315,6 +315,11 @@ input_number:
     max: 650
     step: 5
 
+input_boolean:
+  ict_switch:
+    name: AWS ICT Instance
+    icon: mdi:server
+
 zone:
   - name: Home
     latitude: !secret zone_home_latitude
