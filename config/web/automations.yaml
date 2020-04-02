@@ -11,3 +11,57 @@
   - data:
       entity_id: sensor.dclxvi_tracker_last_seen_duration
     service: homeassistant.update_entity
+
+- id: ict_instance_running
+  alias: ICT instance running
+  trigger:
+    - platform: state
+      entity_id: sensor.ict_instance
+      to: 'running'
+    - platform: state
+      entity_id:  input_boolean.ict_switch
+      to: 'on'
+  condition: []
+  action:
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.ict_switch
+    - service: shell_command.aws_cli_start_instances
+      data:
+        ids: !secret aws_instance_ict_id
+
+- id: tools_instance_running
+  alias: Tools instance running
+  trigger:
+    - platform: state
+      entity_id: sensor.tools_instance
+      to: 'running'
+    - platform: state
+      entity_id:  input_boolean.tools_switch
+      to: 'on'
+  condition: []
+  action:
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.tools_switch
+    - service: shell_command.aws_cli_start_instances
+      data:
+        ids: !secret aws_instance_tools_id
+            
+- id: web_instance_running
+  alias: Web instance running
+  trigger:
+    - platform: state
+      entity_id: sensor.web_instance
+      to: 'running'
+    - platform: state
+      entity_id:  input_boolean.web_switch
+      to: 'on'
+  condition: []
+  action:
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.web_switch
+    - service: shell_command.aws_cli_start_instances
+      data:
+        ids: !secret aws_instance_web_id
