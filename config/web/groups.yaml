@@ -117,6 +117,12 @@ rge:
    - camera.ipcam_livingroom
    - camera.rpi_cam
 
+instances:
+  name: Instances
+  entities:
+    - input_boolean.ict_switch
+    - input_boolean.web_switch
+    - input_boolean.tools_switch
     
    
 
