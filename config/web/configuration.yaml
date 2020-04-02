@@ -355,6 +355,11 @@ mqtt_eventstream:
     - call_service
     - state_changed
 
+notify:
+  - name: aws_cli
+    platform: command_line
+    command: "ARGS=$(cat) && /usr/local/bin/aws $ARGS"
+
 panel_iframe:
   grafana:
     title: 'Grafana'
