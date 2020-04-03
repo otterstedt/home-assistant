@@ -106,7 +106,7 @@
           attachment: "https://w0.pngwave.com/png/942/542/airplane-computer-icons-graphy-aircraft-png-clip-art.png"
     - service: notify.slack_smolandia
       data_template:
-        message: "Silverlyckan Flight Entry by: {{ trigger.event.data.callsign }} Altitude: {{ trigger.event.data.altitude } - https://flightaware.com/live/flight/{{ trigger.event.data.callsign }}"
+        message: "Silverlyckan Flight Entry by: {{ trigger.event.data.callsign }} Altitude: {{ trigger.event.data.altitude }} - https://flightaware.com/live/flight/{{ trigger.event.data.callsign }}"
         title: "Flight: {{ trigger.event.data.callsign }} Altitude: {{ trigger.event.data.altitude }}"
         
 - alias: 'Silver Flight exity notification'
