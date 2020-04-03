@@ -119,3 +119,110 @@
         message: "Silverlyckan Flyover Exit: {{ trigger.event.data.callsign }} - https://flightaware.com/live/flight/{{ trigger.event.data.callsign }}"
         title: "{{ trigger.event.data.callsign }}"
 
+  - id: ict_instance_running
+  alias: ICT instance running
+  trigger:
+    - platform: state
+      entity_id: sensor.ict_instance
+      to: 'running'
+    - platform: state
+      entity_id:  input_boolean.ict_switch
+      to: 'on'
+  condition: []
+  action:
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.ict_switch
+    - service: shell_command.aws_cli_start_instances
+      data:
+        ids: !secret aws_instance_ict_id
+
+- id: ict_instance_stopped
+  alias: ICT instance stopped
+  trigger:
+    - platform: state
+      entity_id: sensor.ict_instance
+      to: 'stopped'
+    - platform: state
+      entity_id:  input_boolean.ict_switch
+      to: 'off'
+  condition: []
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.ict_switch
+    - service: shell_command.aws_cli_stop_instances
+      data:
+        ids: !secret aws_instance_ict_id
+
+- id: tools_instance_running
+  alias: Tools instance running
+  trigger:
+    - platform: state
+      entity_id: sensor.tools_instance
+      to: 'running'
+    - platform: state
+      entity_id:  input_boolean.tools_switch
+      to: 'on'
+  condition: []
+  action:
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.tools_switch
+    - service: shell_command.aws_cli_start_instances
+      data:
+        ids: !secret aws_instance_tools_id
+
+- id: tools_instance_stopped
+  alias: Tools instance stopped
+  trigger:
+    - platform: state
+      entity_id: sensor.tools_instance
+      to: 'stopped'
+    - platform: state
+      entity_id:  input_boolean.tools_switch
+      to: 'off'
+  condition: []
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.tools_switch
+    - service: shell_command.aws_cli_stop_instances
+      data:
+        ids: !secret aws_instance_tools_id
+            
+- id: web_instance_running
+  alias: Web instance running
+  trigger:
+    - platform: state
+      entity_id: sensor.web_instance
+      to: 'running'
+    - platform: state
+      entity_id:  input_boolean.web_switch
+      to: 'on'
+  condition: []
+  action:
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.web_switch
+    - service: shell_command.aws_cli_start_instances
+      data:
+        ids: !secret aws_instance_web_id
+
+- id: web_instance_stopped
+  alias: Web instance stopped
+  trigger:
+    - platform: state
+      entity_id: sensor.web_instance
+      to: 'stopped'
+    - platform: state
+      entity_id:  input_boolean.web_switch
+      to: 'off'
+  condition: []
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.web_switch
+    - service: shell_command.aws_cli_stop_instances
+      data:
+        ids: !secret aws_instance_web_id

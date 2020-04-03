@@ -58,3 +58,10 @@ environment_sln:
     - sensor.silversky
     - sensor.silver_callsign
     - sensor.dipper_sln_temperature
+
+instances:
+  name: Instances
+  entities:
+    - input_boolean.ict_switch
+    - input_boolean.web_switch
+    - input_boolean.tools_switch

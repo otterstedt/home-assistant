@@ -95,6 +95,17 @@ google:
  
 influxdb: 
 
+input_boolean:
+  ict_switch:
+    name: AWS ICT Instance
+    icon: mdi:server
+  tools_switch:
+    name: AWS Tools Instance
+    icon: mdi:server
+  web_switch:
+    name: AWS Web Instance
+    icon: mdi:server
+
 media_extractor:
  
 mqtt: 
@@ -123,6 +134,9 @@ notify:
     api_key: !secret slack_smolandia_hasse_access_token
     default_channel: '#automation-notifications'
     username: hasse
+  - name: aws_cli
+    platform: command_line
+    command: "ARGS=$(cat) && /usr/local/bin/aws $ARGS"
 
 plex:
   host: 10.0.1.2
@@ -198,6 +212,29 @@ sensor:
           {%- else -%}
             0
           {%- endif %}
+          - platform: command_line
+          name: ICT Instance
+          json_attributes:
+            - Reservations
+          command: !secret aws_instance_ict_status_command
+          value_template: '{{ value_json.Reservations[0].Instances[0].State.Name }}'
+  - platform: command_line
+    name: Tools Instance
+    json_attributes:
+      - Reservations
+    command: !secret aws_instance_tools_status_command
+    value_template: '{{ value_json.Reservations[0].Instances[0].State.Name }}'
+  - platform: command_line
+    name: Web Instance
+    json_attributes:
+      - Reservations
+    command: !secret aws_instance_web_status_command
+    value_template: '{{ value_json.Reservations[0].Instances[0].State.Name }}'
+
+shell_command:
+  aws_cli: '/usr/local/bin/aws {{ args }}'
+  aws_cli_start_instances: '/usr/local/bin/aws ec2 start-instances --instance-ids {{ ids }}'
+  aws_cli_stop_instances: '/usr/local/bin/aws ec2 stop-instances --instance-ids {{ ids }}'
 
 speedtestdotnet:
 
