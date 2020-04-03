@@ -65,3 +65,11 @@ instances:
     - input_boolean.ict_switch
     - input_boolean.web_switch
     - input_boolean.tools_switch
+
+other:
+  name: Other Devices
+    - person.dclxvi
+
+guests:
+  name: Guest Devices
+    - person.melanie
