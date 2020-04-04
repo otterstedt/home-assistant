@@ -138,9 +138,9 @@ notify:
     platform: command_line
     command: "ARGS=$(cat) && /usr/local/bin/aws $ARGS"
 
-plex:
-  host: 10.0.1.2
-  port: 32401
+#plex:
+#  host: 10.0.1.2
+#  port: 32401
 
 prometheus:
   namespace: hass_sln
