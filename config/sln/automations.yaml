@@ -34,6 +34,8 @@
   action:
     - service: switch.turn_on
       entity_id: switch.balcony_power
+    - service: switch.turn_on
+      entity_id: switch.toilet_top_power
       
 - id: sunrise_lights
   alias: Lights at sunrise
@@ -48,6 +50,8 @@
   action:
     - service: switch.turn_off
       entity_id: switch.balcony_power
+    - service: switch.turn_off
+      entity_id: switch.toilet_top_power
 
 - id: '1579890137263'
   alias: Car arrives
