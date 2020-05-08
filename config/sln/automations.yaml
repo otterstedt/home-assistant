@@ -29,8 +29,8 @@
     offset: "-00:15:00"
   condition:
     - condition: state
-      entity_id: person.dclxvi
-      state: home
+      entity_id: binary_sensor.person_present
+      state: 'on'
   action:
     - service: switch.turn_on
       entity_id: switch.balcony_power
@@ -45,8 +45,8 @@
     offset: "00:15:00"
   condition:
     - condition: state
-      entity_id: person.dclxvi
-      state: home
+      entity_id: binary_sensor.person_present
+      state: 'on'
   action:
     - service: switch.turn_off
       entity_id: switch.balcony_power
