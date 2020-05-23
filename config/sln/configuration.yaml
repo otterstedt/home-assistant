@@ -137,6 +137,19 @@ notify:
   - name: aws_cli
     platform: command_line
     command: "ARGS=$(cat) && /usr/local/bin/aws $ARGS"
+  - name: twitter
+    platform: twitter
+    consumer_key: !secret twitter_consumer_key
+    consumer_secret: !secret twitter_consumer_secret
+    access_token: !secret twitter_access_token
+    access_token_secret: !secret twitter_access_token_secret
+  - name: twitter_direct
+    platform: twitter
+    consumer_key: !secret twitter_consumer_key
+    consumer_secret: !secret twitter_consumer_secret
+    access_token: !secret twitter_access_token
+    access_token_secret: !secret twitter_access_token_secret
+    username: !secret twitter_username
 
 #plex:
 #  host: 10.0.1.2
