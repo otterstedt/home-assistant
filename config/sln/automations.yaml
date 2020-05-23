@@ -112,6 +112,10 @@
       data_template:
         message: "Silverlyckan Flight Entry by: {{ trigger.event.data.callsign }} Altitude: {{ trigger.event.data.altitude }} - https://flightaware.com/live/flight/{{ trigger.event.data.callsign }}"
         title: "Flight: {{ trigger.event.data.callsign }} Altitude: {{ trigger.event.data.altitude }}"
+    - service: notify.twitter
+      data_template:
+        message: "Silverlyckan Flight Entry by: {{ trigger.event.data.callsign }} Altitude: {{ trigger.event.data.altitude }} - https://flightaware.com/live/flight/{{ trigger.event.data.callsign }}"
+        title: "Flight: {{ trigger.event.data.callsign }} Altitude: {{ trigger.event.data.altitude }}"
         
 - alias: 'Silver Flight exity notification'
   trigger:
