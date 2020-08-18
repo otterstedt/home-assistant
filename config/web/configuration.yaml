@@ -326,6 +326,16 @@ input_number:
     min: 0
     max: 650
     step: 5
+  oli_budget:
+    name: 'Oli $'
+    min: 0
+    max: 400
+    step: 5
+  doro_budget:
+    name: 'Doro $'
+    min: 0
+    max: 400
+    step: 5
 
 input_boolean:
   ict_switch:
