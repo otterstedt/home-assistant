@@ -326,6 +326,11 @@ input_number:
     min: 0
     max: 650
     step: 5
+  score_budget:
+    name: Budget Score
+    min: 0
+    max: 1000
+    step: 5
   oli_budget:
     name: 'Oli $'
     min: 0
