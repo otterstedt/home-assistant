@@ -118,7 +118,7 @@ sensor:
         friendly_name: '10k odometer'
         unit_of_measurement: 'km'
       dclxvi_odometer_insurance_period:
-        value_template: '{{  ((states.sensor.dclxvi_odometer.state | int) - 81472) }}'
+        value_template: '{{  ((states.sensor.dclxvi_odometer.state | int) - 123412) }}'
         friendly_name: 'Insurance Period Odometer'
         unit_of_measurement: 'km'
       to_home_dclxvi_diff:
