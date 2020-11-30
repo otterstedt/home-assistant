@@ -57,6 +57,12 @@ camera:
     name: !secret camera_sln_washer_name
     mjpeg_url: !secret camera_sln_washer_url
     
+lutron_caseta:
+    host: 10.0.1.41
+    keyfile: caseta.key
+    certfile: caseta.crt
+    ca_certs: caseta-bridge.crt
+    
 climate:
   - platform: generic_thermostat
     name: Bedroom Thermostat
