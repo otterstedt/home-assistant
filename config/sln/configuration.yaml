@@ -72,6 +72,14 @@ climate:
     cold_tolerance: 0.8
     keep_alive:
       minutes: 5
+  - platform: generic_thermostat
+    name: Media Room Thermostat
+    heater: switch.radiator_media
+    target_sensor: sensor.mediaroom_sln_temperature
+    max_temp: 24
+    cold_tolerance: 0.8
+    keep_alive:
+      minutes: 5
 
 device_tracker: 
   - platform: bluetooth_tracker 
